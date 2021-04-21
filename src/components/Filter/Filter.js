@@ -1,24 +1,20 @@
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { updateFilter } from "../../redux/contacts";
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateFilter } from '../../redux/contacts';
 
-const Filter = ({ updateFilter }) => {
+export default function Filter() {
+  const dispatch = useDispatch();
+  const onChange = useCallback(
+    event => {
+      dispatch(updateFilter(event.target.value));
+    },
+    [dispatch],
+  );
+
   return (
     <div>
       <p>Find contacts by name</p>
-      <input type="text" onChange={updateFilter} id="find"></input>
+      <input type="text" onChange={onChange} id="find"></input>
     </div>
   );
-};
-
-const mapDispatchProps = (dispatch) => {
-  return {
-    updateFilter: (event) => dispatch(updateFilter(event.target.value)),
-  };
-};
-
-Filter.propTypes = {
-  updateFilter: PropTypes.func.isRequired,
-};
-
-export default connect(null, mapDispatchProps)(Filter);
+}

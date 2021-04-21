@@ -1,77 +1,66 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { authOperations } from "../redux/auth";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { authOperations } from '../redux/auth';
 
 const styles = {
   form: {
     width: 320,
   },
   label: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     marginBottom: 15,
   },
 };
 
-class LoginView extends Component {
-  state = {
-    email: "",
-    password: "",
+export default function LoginView() {
+  const dispatch = useDispatch();
+  const onLogin = value => {
+    dispatch(authOperations.logIn(value));
   };
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleChange = ({ target: { name, value } }) => {
+    name === 'email' ? setEmail(value) : setPassword(value);
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    this.props.onLogin(this.state);
-
-    this.setState({ name: "", email: "", password: "" });
+    onLogin({ email, password });
+    setEmail('');
+    setPassword('');
   };
 
-  render() {
-    const { email, password } = this.state;
+  return (
+    <div>
+      <h1>Страница логина</h1>
 
-    return (
-      <div>
-        <h1>Страница логина</h1>
+      <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
+        <label style={styles.label}>
+          Почта
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+          />
+        </label>
 
-        <form
-          onSubmit={this.handleSubmit}
-          style={styles.form}
-          autoComplete="off"
-        >
-          <label style={styles.label}>
-            Почта
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={this.handleChange}
-            />
-          </label>
+        <label style={styles.label}>
+          Пароль
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+        </label>
 
-          <label style={styles.label}>
-            Пароль
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={this.handleChange}
-            />
-          </label>
-
-          <button type="submit">Войти</button>
-        </form>
-      </div>
-    );
-  }
+        <button type="submit">Войти</button>
+      </form>
+    </div>
+  );
 }
-
-const mapDispatchToProps = {
-  onLogin: authOperations.logIn,
-};
-
-export default connect(null, mapDispatchToProps)(LoginView);
