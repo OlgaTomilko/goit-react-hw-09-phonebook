@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from '../redux/auth';
+import Button from '@material-ui/core/Button';
 
 const styles = {
   form: {
@@ -70,8 +71,9 @@ export default function RegisterView() {
             onChange={handleChange}
           />
         </label>
-
-        <button type="submit">Зарегистрироваться</button>
+        <Button variant="contained" color="primary" size="small" type="submit">
+          Зарегистрироваться
+        </Button>
       </form>
     </div>
   );

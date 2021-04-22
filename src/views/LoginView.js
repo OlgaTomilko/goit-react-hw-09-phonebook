@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authOperations } from '../redux/auth';
+import Button from '@material-ui/core/Button';
 
 const styles = {
   form: {
@@ -58,8 +59,9 @@ export default function LoginView() {
             onChange={handleChange}
           />
         </label>
-
-        <button type="submit">Войти</button>
+        <Button variant="contained" color="primary" size="small" type="submit">
+          Войти
+        </Button>
       </form>
     </div>
   );

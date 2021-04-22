@@ -2,6 +2,7 @@ import './App.css';
 import React, { useEffect, Suspense, lazy } from 'react';
 import { Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import Container from './components/Container';
 import AppBar from './components/AppBar';
 import { authOperations } from './redux/auth';
 import PrivateRoute from './components/PrivateRoute';
@@ -20,7 +21,7 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <Container>
       <AppBar />
       <Suspense fallback={<p>Загружаем...</p>}>
         <Switch>
@@ -41,6 +42,6 @@ export default function App() {
           </PrivateRoute>
         </Switch>
       </Suspense>
-    </>
+    </Container>
   );
 }
